@@ -1,0 +1,57 @@
+<div class="container-fluid">
+    <div class="row">
+        <div class="col bg-secondary text-white">
+            <a class="navbar-brand">Online Store</a>
+            <cart-summary></cart-summary>
+        </div>
+    </div>
+    <div class="row text-white" >
+        <div class="col-3 bg-secondary p-2">
+           <!--Categories {{categories.length}}-->
+            <!-- home button -->
+           <button class="btn-block btn  btn-outline-dark" (click)="changeCategory()">
+               HOME
+           </button>
+           <!-- categories button | show procut accoring to their category -->
+           <button *ngFor="let cat of categories" class="btn btn-outline btn-dark btn-block" [class.active]="cat==selectedCategory"(click)="changeCategory(cat)">
+               {{cat}}
+           </button>
+           <!-- Admin Button -->
+           <button class="btn btn-block bg-danger m-t-3"
+                routerLink="/admin">
+               Admin
+           </button>
+        </div>
+
+        <div class="col-9 bg-secondary p-2">
+           <!-- Products {{products.length}}-->
+            <div *ngFor ="let product of products" class="card m-1 p-1 bg-dark">
+                <h4>
+                    {{product.name}}
+                    <span class="badge badge-pill badge-danger float-right">
+                        {{product.price | currency:"INR":"symbol":"2.2-2"}}
+                    </span>
+                </h4>
+                <div class="card-text bg-dark p-1">
+                    {{product.description}}
+
+                <button class="btn btn-warning btn-sm float-right" (click)="addProductToCart(product)">
+                    Add To Cart
+                </button>
+                </div>
+            </div>
+            <div class="form-inline float-right mr-1">
+                <select class="form-control" [value]="productPerPage" (change)="changePageSize($event.target.value)">
+                    <option value="4">Four Products</option>
+                    <option value="6">Six Products</option>
+                    <option value="8">Eight products</option>
+                </select>
+            </div>
+            <div class="btn-group float-left">
+                <button *ngFor = "let page of pageNumber" (click)="changePage(page)" class="btn btn-outline-dark" [class.active]="page==selectedPage">
+                            {{page}}
+                </button>
+            </div>
+        </div>
+    </div>
+</div>
